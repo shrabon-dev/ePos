@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('contact_number')->nullable();
             $table->longText('address')->nullable();
             $table->string('account_status');
-            $table->string('role');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

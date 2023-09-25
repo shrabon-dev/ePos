@@ -20,6 +20,7 @@ class RoleManagementSeed extends Seeder
         Role::create(['name' => 'inventory manager']);
         Role::create(['name' => 'administrator']);
         Role::create(['name' => 'accountant']);
+        Role::create(['name' => 'customer']);
 
         Permission::create(['name' => 'add']);
         Permission::create(['name' => 'edit']);

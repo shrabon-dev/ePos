@@ -27,15 +27,16 @@ class AdminController extends Controller
         ]);
 
         $random_password = Str::random(8);
-
-        User::create([
+        
+        $userID =User::insertGetId([
             'name' => $request->name,
             'email' => $request->email,
             'email_verified_at' => Carbon::now(),
             'account_status' => 'active',
             'password' => Hash::make($random_password),
-            'role' => $request->role,
         ]);
+
+        User::find($userID)->assignRole($request->role);
               Mail::to($request->email)->send(new UserPasswordSend($request->name,$request->email,$random_password));
               return back()->with('status','Successfully added a new user');
     }

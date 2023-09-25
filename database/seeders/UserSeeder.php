@@ -20,11 +20,9 @@ class UserSeeder extends Seeder
             'name' => 'shrabon',
             'email' => 'supper_admin@epos.com',
             'account_status' => 'active ',
-            'role' => 'supper-admin',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('password'),
             'created_at' => Carbon::now(),
-
         ]);
     }
 }
