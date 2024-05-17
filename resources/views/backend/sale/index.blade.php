@@ -57,9 +57,6 @@
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <div>
-                                        <input class="form-check-input me-3" type="checkbox" value="" aria-label="...">
-                                    </div>
                                     <div class="ms-2">
                                         {{-- <h6 class="mb-0 font-14">{{ $sale[$key]->quantity }}</h6> --}}
                                         <h6 class="mb-0 font-14">#{{ $sale->id }}</h6>
@@ -76,9 +73,9 @@
                                 @endif
                             </td>
                             <td><div class="badge rounded-pill {{  $sale->payment_status == 'completed' ? 'text-success bg-light-success':'text-danger bg-light-danger' }}  p-2 text-uppercase px-3"><i class="bx bxs-circle me-1"></i>{{ $sale->payment_status }}</div></td>
-                            <td>${{ $sale->paid }}</td>
-                            <td>${{ $sale->due }}</td>
-                            <td>${{ $sale->total_price }}</td>
+                            <td>TK.{{ $sale->paid }}</td>
+                            <td>TK.{{ $sale->due }}</td>
+                            <td>TK.{{ $sale->total_price }}</td>
                             <td>
                                 <div class="d-flex order-actions">
                                     <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#exampleLargeModal{{ $sale->id }}" class=""><i class="bx bxs-edit"></i></a>

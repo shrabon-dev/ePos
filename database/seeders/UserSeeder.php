@@ -16,13 +16,19 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('users')->insert([
-            'name' => 'shrabon',
-            'email' => 'supper_admin@epos.com',
-            'account_status' => 'active ',
-            'email_verified_at' => Carbon::now(),
-            'password' => Hash::make('password'),
-            'created_at' => Carbon::now(),
-        ]);
+        $user =  DB::table('users')->where('email', 'supper_admin@epos.com')->first();
+
+        if (!$user) {
+            // User does not exist, create a new one
+            DB::table('users')->insert([
+                'name' => 'shrabon',
+                'email' => 'supper_admin@epos.com',
+                'account_status' => 'active ',
+                'email_verified_at' => Carbon::now(),
+                'password' => Hash::make('password'),
+                'created_at' => Carbon::now(),
+            ]);
+        }
+
     }
 }

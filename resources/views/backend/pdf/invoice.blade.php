@@ -63,9 +63,11 @@
                             <div class="row contacts">
                                 <div class="col invoice-to">
                                     <div class="text-gray-light">INVOICE TO:</div>
+                                    @if ($invoice->customer_id)
                                     <h2 class="to">{{ \App\Models\User::find($invoice->customer_id)->name }}</h2>
                                     <div class="address">{{ \App\Models\User::find($invoice->customer_id)->address }}</div>
                                     <div class="email"><a href="mailto:john@example.com">{{ \App\Models\User::find($invoice->customer_id)->email }}</a>
+                                    @endif
                                     </div>
                                 </div>
                                 <div class="col invoice-details">

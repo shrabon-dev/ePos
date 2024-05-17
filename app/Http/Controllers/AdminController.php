@@ -21,24 +21,27 @@ class AdminController extends Controller
     }
 
     function add_user_store(Request $request){
+        // return $request->role;
         $request->validate([
             '*' => 'required',
             'email' =>'email:rfc,dns|unique:App\Models\User,email',
+            'role' => 'exists:roles,id',
         ]);
 
         $random_password = Str::random(8);
-        
+
         $userID =User::insertGetId([
             'name' => $request->name,
             'email' => $request->email,
             'email_verified_at' => Carbon::now(),
             'account_status' => 'active',
             'password' => Hash::make($random_password),
+            'created_at' => Carbon::now(),
         ]);
 
-        User::find($userID)->assignRole($request->role);
-              Mail::to($request->email)->send(new UserPasswordSend($request->name,$request->email,$random_password));
-              return back()->with('status','Successfully added a new user');
+        User::find($userID)->assignRole((int)$request->role);
+        Mail::to($request->email)->send(new UserPasswordSend($request->name,$request->email,$random_password));
+        return back()->with('status','Successfully added a new user');
     }
 
     function user_list(){

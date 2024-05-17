@@ -12,4 +12,10 @@ class Product extends Model
     public function relationWithTax(){
         return $this->hasOne(Tax::class,'id','tax');
     }
+    public function relationWithBrand(){
+        return $this->hasOne(Brand::class,'id','brand');
+    }
+    public function relationWithCategory(){
+        return $this->hasOne(Category::class,'id','category');
+    }
 }

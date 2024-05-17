@@ -52,6 +52,15 @@
                       </select>
                   </div>
                   <div class="mb-3">
+                    <label for="inputProductType" class="form-label">Supplier</label>
+                    <select name="category" class="form-select" id="inputProductType">
+                        <option value="" disabled selected>Choose a supplier</option>
+                        @foreach ($suppliers as $supplier)
+                          <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                        @endforeach
+                      </select>
+                  </div>
+                  <div class="mb-3">
                     <label for="inputProductType" class="form-label">Brand</label>
                     <select name="brand" class="form-select" id="inputProductType">
                             <option value="" disabled selected>Choose a brand</option>

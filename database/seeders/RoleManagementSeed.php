@@ -15,24 +15,31 @@ class RoleManagementSeed extends Seeder
      */
     public function run(): void
     {
-        Role::create(['name' => 'admin']);
-        Role::create(['name' => 'store manager']);
-        Role::create(['name' => 'inventory manager']);
-        Role::create(['name' => 'administrator']);
-        Role::create(['name' => 'accountant']);
-        Role::create(['name' => 'customer']);
+        $roleName = 'admin';
+        $guardName = 'web';
 
-        Permission::create(['name' => 'add']);
-        Permission::create(['name' => 'edit']);
-        Permission::create(['name' => 'view']);
-        Permission::create(['name' => 'delete']);
-        Permission::create(['name' => 'sales']);
-        Permission::create(['name' => 'purchase']);
+        if (!Role::where('name', $roleName)->where('guard_name', $guardName)->exists()) {
+            Role::create(['name' => 'admin']);
+                Role::create(['name' => 'store manager']);
+                Role::create(['name' => 'inventory manager']);
+                Role::create(['name' => 'administrator']);
+                Role::create(['name' => 'accountant']);
+                Role::create(['name' => 'customer']);
+                Role::create(['name' => 'employee']);
 
-        $role = Role::create(['name' => 'super-admin']);
-        $role->givePermissionTo(Permission::all());
-        $user= User::find(1);
-        $user->assignRole($role);
+                Permission::create(['name' => 'add']);
+                Permission::create(['name' => 'edit']);
+                Permission::create(['name' => 'view']);
+                Permission::create(['name' => 'delete']);
+                Permission::create(['name' => 'sales']);
+                Permission::create(['name' => 'purchase']);
+
+                $role = Role::create(['name' => 'super-admin']);
+                $role->givePermissionTo(Permission::all());
+                $user= User::find(1);
+                $user->assignRole($role);
+
+        }
 
     }
 }

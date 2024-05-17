@@ -33,12 +33,12 @@ class PosController extends Controller
         $invoice = Invoice::find($id);
         $invoiceDetails = InvoiceDetail::where('invoice_id',$id)->get();
 
-        $pdf = Pdf::loadView('backend.pdf.download.invoice',compact('invoice','invoiceDetails'))->setOptions(['defaultFont' => 'sans-serif']);
+        $pdf = Pdf::loadView('backend.pdf.download.invoice',compact('invoice','invoiceDetails'))->setOptions(['defaultFont' => 'sans-serif','isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]);
         return $pdf->stream(Carbon::now()->timestamp.'_'.'invoice.pdf');
-
     }
+
     public function invoice_update(Request $request,$id){
-        if($request->total_price - ($request->now_paying + $request->total_payment) == 0){
+        if($request->total_price - ($request->now_paying + $request->total_payment) == 0||$request->total_price - ($request->now_paying + $request->total_payment) < 0){
             Invoice::find($id)->update([
                 'paid' => $request->now_paying + $request->total_payment,
                 'due' => $request->total_price - ($request->now_paying + $request->total_payment),

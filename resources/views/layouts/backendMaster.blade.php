@@ -17,6 +17,7 @@
 	<!-- loader-->
 	<link href="{{ asset('backend_assets') }}/css/pace.min.css" rel="stylesheet" />
 	<script src="{{ asset('backend_assets') }}/js/pace.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 	<!-- Bootstrap CSS -->
 	<link href="{{ asset('backend_assets') }}/css/bootstrap.min.css" rel="stylesheet">
 	<link href="{{ asset('backend_assets') }}/css/bootstrap-extended.css" rel="stylesheet">
@@ -68,16 +69,15 @@
 
 <body>
 	<!--wrapper-->
-
 	<div class="wrapper">
 		<!--sidebar wrapper -->
 		<div class="sidebar-wrapper" data-simplebar="true">
 			<div class="sidebar-header">
 				<div>
-					<a href="{{ route('dashboard') }}"><img src="{{ asset('backend_assets') }}/images/logo-icon.png" class="logo-icon" alt="logo icon"></a>
+					<a href="{{ route('dashboard') }}"><img src="{{ asset('storage/logo') }}/{{ \App\Models\SiteSetting::where('name', 'company_logo')->first()->value ?? 'Default Company Name' }}" class="logo-icon" alt="logo icon"></a>
 				</div>
 				<div>
-					<h4 class="logo-text">ePos</h4>
+					<h4 class="logo-text">{{ \App\Models\SiteSetting::where('name', 'company_name')->first()->value ?? 'Default Company Name' }}</h4>
 				</div>
 				<div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
 				</div>
@@ -98,9 +98,9 @@
 				</li>
 				<li>
 					<a href="javascript:;" class="has-arrow">
-						<div class="parent-icon"><i class="bx bx-category"></i>
+						<div class="parent-icon"><i class="fadeIn animated bx bx-user-circle"></i>
 						</div>
-						<div class="menu-title">Management</div>
+						<div class="menu-title">User Management</div>
 					</a>
 					<ul>
 
@@ -112,48 +112,19 @@
                         @endrole
 					</ul>
 				</li>
-				<li>
+                <li>
 					<a href="javascript:;" class="has-arrow">
-						<div class="parent-icon"><i class="lni lni-cogs"></i></div>
-						<div class="menu-title"> Settings</div>
-					</a>
-					<ul>
-
-                        @role('super-admin')
-                            <li @if ( $current_url == 'tax')class="mm-active" @endif > <a href="{{ route('tax') }}"><i class="bx bx-right-arrow-alt"></i> Tax List</a>
-                            </li>
-                        @endrole
-					</ul>
-				</li>
-				<li>
-					<a href="javascript:;" class="has-arrow">
-						<div class="parent-icon"><i class="lni lni-money-protection"></i>
-						</div>
-						<div class="menu-title">Sale</div>
-					</a>
-					<ul>
-
-                        @role('super-admin')
-                            <li @if ( $current_url == 'sale/create')class="mm-active" @endif > <a href="{{ route('sale.create') }}"><i class="bx bx-right-arrow-alt"></i>Pos</a>
-                            </li>
-                            <li @if ( $current_url == 'sale')class="mm-active" @endif> <a href="{{ route('sale.index') }}"><i class="bx bx-right-arrow-alt"></i>Sale List <span class="badge bg-primary" style="margin: 0 5px">{{ salesCount()->count() }}</span> <div class="spinner-grow spinner-grow-sm bg-info ml-5" role="status"> <span class="visually-hidden"></span>
-                            </div></a>
-                            </li>
-                        @endrole
-					</ul>
-				</li>
-				<li>
-					<a href="javascript:;" class="has-arrow">
-						<div class="parent-icon"><i class="lni lni-package"></i>
+						<div class="parent-icon"><i class="lni lni-shopping-basket"></i>
 						</div>
 						<div class="menu-title">Product</div>
 					</a>
 					<ul>
-
                         {{-- @role('super-admin') --}}
                             <li @if ( $current_url == 'product')class="mm-active" @endif > <a href="{{ route('product.index') }}"><i class="bx bx-right-arrow-alt"></i>Products</a>
                             </li>
                             <li @if ( $current_url == 'product/create')class="mm-active" @endif > <a href="{{ route('product.create') }}"><i class="bx bx-right-arrow-alt"></i>New Product Add</a>
+                            </li>
+                            <li @if ( $current_url == 'product/bulk')class="mm-active" @endif > <a href="{{ route('product.add.bulk') }}"><i class="bx bx-right-arrow-alt"></i>Bulk Product Add</a>
                             </li>
                             <li @if ( $current_url == 'category')class="mm-active" @endif > <a href="{{ route('category.index') }}"><i class="bx bx-right-arrow-alt"></i>Category</a>
                             </li>
@@ -164,7 +135,107 @@
                         {{-- @endrole --}}
 					</ul>
 				</li>
-
+                <li>
+					<a href="javascript:;" class="has-arrow">
+						<div class="parent-icon"><i class="bx bx-grid-alt"></i>
+						</div>
+						<div class="menu-title">Supplier </div>
+					</a>
+					<ul>
+                        @role('super-admin')
+                            <li @if ( $current_url == 'supplier.create')class="mm-active" @endif > <a href="{{ route('supplier.create') }}"><i class="bx bx-right-arrow-alt"></i>Add Supplier</a></li>
+                            <li @if ( $current_url == 'supplier.index')class="mm-active" @endif > <a href="{{ route('supplier.index') }}"><i class="bx bx-right-arrow-alt"></i>Supplier List</a></li>
+                        @endrole
+					</ul>
+				</li>
+                @role('super-admin')
+                <li @if ( $current_url == 'sale/create')class="mm-active" @endif > <a href="{{ route('sale.create') }}"><div class="parent-icon"><span class="material-symbols-outlined">
+                    point_of_sale
+                    </span>
+                </div> <div class="menu-title">Pos</div> </a>
+                </li>
+                @endrole
+				<li>
+					<a href="javascript:;" class="has-arrow">
+						<div class="parent-icon"><i class="fadeIn animated bx bx-money"></i>
+						</div>
+						<div class="menu-title">Sale</div>
+					</a>
+					<ul>
+                        @role('super-admin')
+                            <li @if ( $current_url == 'sale')class="mm-active" @endif> <a href="{{ route('sale.index') }}"><i class="bx bx-right-arrow-alt"></i>Sale List <span class="badge bg-primary" style="margin: 0 5px">{{ salesCount()->count() }}</span> <div class="spinner-grow spinner-grow-sm bg-info ml-5" role="status"> <span class="visually-hidden"></span>
+                            </div></a>
+                            </li>
+                        @endrole
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:;" class="has-arrow">
+						<div class="parent-icon">
+                            <i class="lni lni-users"></i>
+						</div>
+						<div class="menu-title">Employe Manage</div>
+					</a>
+					<ul>
+                        @role('super-admin')
+                            <li @if ( $current_url == 'employe.create')class="mm-active" @endif > <a href="{{ route('employe.create') }}"><i class="bx bx-right-arrow-alt"></i>Employe Add</a></li>
+                            <li @if ( $current_url == 'employe.index')class="mm-active" @endif > <a href="{{ route('employe.index') }}"><i class="bx bx-right-arrow-alt"></i>Employe List <span class="badge bg-primary" style="margin: 0 5px">{{ employeCount() }}</span></a></li>
+                        @endrole
+					</ul>
+				</li>
+                <li>
+					<a href="javascript:;" class="has-arrow">
+						<div class="parent-icon">
+                            <i class="lni lni-credit-cards"></i>
+						</div>
+						<div class="menu-title">Salary Management</div>
+					</a>
+					<ul>
+                        @role('super-admin')
+                            <li @if ( $current_url == 'salary.create')class="mm-active" @endif > <a href="{{ route('salary.create') }}"><i class="bx bx-right-arrow-alt"></i>Salary Pay</a></li>
+                            <li @if ( $current_url == 'salary.index')class="mm-active" @endif > <a href="{{ route('salary.index') }}"><i class="bx bx-right-arrow-alt"></i>Salary List</a></li>
+                        @endrole
+					</ul>
+				</li>
+                <li>
+					<a href="javascript:;" class="has-arrow">
+						<div class="font-22">	<i class="fadeIn animated bx bx-mail-send"></i>
+                        </div>
+						<div class="menu-title">Email</div>
+					</a>
+					<ul>
+                        @role('super-admin')
+                            <li @if ( $current_url == 'email.send')class="mm-active" @endif > <a href="{{ route('email.send') }}"><i class="bx bx-right-arrow-alt"></i>Send Mail</a></li>
+                            <li @if ( $current_url == 'email.create')class="mm-active" @endif > <a href="{{ route('email.create') }}"><i class="bx bx-right-arrow-alt"></i>Email Template</a></li>
+                        @endrole
+					</ul>
+				</li>
+                <li>
+					<a href="javascript:;" class="has-arrow">
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-bar-chart-alt"></i></div>
+						<div class="menu-title">Report</div>
+					</a>
+					<ul>
+                        @role('super-admin')
+                            <li @if ( $current_url == 'product-report')class="mm-active" @endif > <a href="{{ route('product.report') }}"><i class="bx bx-right-arrow-alt"></i>Product Report </a></li>
+                            <li @if ( $current_url == 'sale-report')class="mm-active" @endif > <a href="{{ route('sale.report') }}"><i class="bx bx-right-arrow-alt"></i>Sales Report </a></li>
+                            <li @if ( $current_url == 'salary-report')class="mm-active" @endif > <a href="{{ route('salary.report') }}"><i class="bx bx-right-arrow-alt"></i>Salary Report </a></li>
+                        @endrole
+					</ul>
+				</li>
+                <li>
+					<a href="javascript:;" class="has-arrow">
+						<div class="parent-icon"><i class="lni lni-cogs"></i></div>
+						<div class="menu-title"> Settings</div>
+					</a>
+					<ul>
+                        @role('super-admin')
+                            <li @if ( $current_url == 'tax')class="mm-active" @endif > <a href="{{ route('tax') }}"><i class="bx bx-right-arrow-alt"></i> Tax List</a></li>
+                            <li @if ( $current_url == 'site/setting')class="mm-active" @endif > <a href="{{ route('site.setting') }}"><i class="bx bx-right-arrow-alt"></i> Site Setting</a></li>
+                            <li @if ( $current_url == 'invoice/setting')class="mm-active" @endif > <a href="{{ route('invoice.setting') }}"><i class="bx bx-right-arrow-alt"></i> Invoice Setting</a></li>
+                        @endrole
+					</ul>
+				</li>
 			</ul>
 			<!--end navigation-->
 		</div>

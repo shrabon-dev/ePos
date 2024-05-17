@@ -231,7 +231,6 @@
                                 <tr>
                                     <th>SL. </th>
                                     <th>Product</th>
-
                                     <th>Quantity</th>
                                     <th>Price</th>
                                     <th>Discount</th>
@@ -268,9 +267,8 @@
                                             </div>
                                         </td>
                                         <td>
-
                                             <div class="d-flex">
-                                                @if ($cart->quantity > 1)
+                                                @if ($cart->quantity > 0)
                                                     <button wire:click="decrement({{ $cart->id }})" style="height: 30px !important;line-height: 0 !important;font-size: 30px;" class="btn" data-action="minus" type="button">-</button>
                                                 @else
                                                     <button style="height: 30px !important;line-height: 0 !important;font-size: 30px; opacity:.5" class="btn" data-action="minus" type="button">-</button>
@@ -280,28 +278,27 @@
                                             </div>
                                         </td>
                                         <td>
-                                            {{ $cart->relationWithProduct->price * $cart->quantity }}
+                                            TK.{{ $cart->relationWithProduct->price * $cart->quantity }}
                                             @php
                                                 $price += $cart->relationWithProduct->price * $cart->quantity
                                             @endphp
                                         </td>
+                                        <td>TK.
 
-                                        <td>
                                            @if ($cart->relationWithProduct->discount_type == 'fixed')
                                             {{ $cart->relationWithProduct->discount * $cart->quantity }}
                                             @php
                                             $totalDiscount += $cart->relationWithProduct->discount * $cart->quantity
                                             @endphp
                                            @else
-                                            {{ ceil(($cart->relationWithProduct->price * $cart->quantity)*$cart->relationWithProduct->discount/100) }}
+                                            {{ round(($cart->relationWithProduct->price * $cart->quantity)*$cart->relationWithProduct->discount/100) }}
                                             @php
-                                            $totalDiscount += ceil(($cart->relationWithProduct->price * $cart->quantity)*$cart->relationWithProduct->discount/100)
+                                            $totalDiscount += round(($cart->relationWithProduct->price * $cart->quantity)*$cart->relationWithProduct->discount/100)
                                             @endphp
                                            @endif
-                                           <a href="#"><i class="fadeIn animated bx bx-edit-alt"></i></a>
-
+                                           {{-- <a href="#"><i class="fadeIn animated bx bx-edit-alt"></i></a> --}}
                                         </td>
-                                        <td>
+                                        <td>TK.
                                             @if ($cart->relationWithProduct->discount_type == 'fixed')
 
                                             {{ (( $cart->relationWithProduct->price * $cart->quantity) - ($cart->relationWithProduct->discount * $cart->quantity)) * $cart->relationWithProduct->relationWithTax->percentage / 100 }}
@@ -313,12 +310,13 @@
 
                                             {{ (( $cart->relationWithProduct->price * $cart->quantity) - ( ($cart->relationWithProduct->price * $cart->quantity) * $cart->relationWithProduct->discount/100)) * $cart->relationWithProduct->relationWithTax->percentage / 100 }}
                                             @php
-                                            $totalTax += (( $cart->relationWithProduct->price * $cart->quantity) - ceil(($cart->relationWithProduct->price * $cart->quantity))*$cart->relationWithProduct->discount/100) * $cart->relationWithProduct->relationWithTax->percentage / 100
+                                            $totalTax += (( $cart->relationWithProduct->price * $cart->quantity) - round(($cart->relationWithProduct->price * $cart->quantity))*$cart->relationWithProduct->discount/100) * $cart->relationWithProduct->relationWithTax->percentage / 100
                                             @endphp
                                             @endif
-                                           <a href="#"><i class="fadeIn animated bx bx-edit-alt"></i></a>
+                                           {{-- <a href="#"><i class="fadeIn animated bx bx-edit-alt"></i></a> --}}
                                         </td>
-                                        <td>
+                                        <td>TK.
+
                                             @if ($cart->relationWithProduct->discount_type == 'fixed')
 
                                             {{  ((( $cart->relationWithProduct->price * $cart->quantity) - $cart->relationWithProduct->discount * $cart->quantity)) + ((( $cart->relationWithProduct->price * $cart->quantity) - $cart->relationWithProduct->discount * $cart->quantity) * $cart->relationWithProduct->relationWithTax->percentage / 100) }}
@@ -327,12 +325,13 @@
                                             @endphp
                                            @else
 
-                                           {{ ((( $cart->relationWithProduct->price * $cart->quantity) - ceil(($cart->relationWithProduct->price * $cart->quantity))*$cart->relationWithProduct->discount/100)) + ((( $cart->relationWithProduct->price * $cart->quantity) - ceil(($cart->relationWithProduct->price * $cart->quantity))*$cart->relationWithProduct->discount/100) * $cart->relationWithProduct->relationWithTax->percentage / 100) }}
+                                           {{ (( $cart->relationWithProduct->price * $cart->quantity) - round(($cart->relationWithProduct->price * $cart->quantity)*$cart->relationWithProduct->discount/100)) + ((( $cart->relationWithProduct->price * $cart->quantity) - round(($cart->relationWithProduct->price * $cart->quantity)*$cart->relationWithProduct->discount/100)) * $cart->relationWithProduct->relationWithTax->percentage / 100) }}
 
                                            @php
-                                               $totalPrice += ((( $cart->relationWithProduct->price * $cart->quantity) - ceil(($cart->relationWithProduct->price * $cart->quantity))*$cart->relationWithProduct->discount/100)) + ((( $cart->relationWithProduct->price * $cart->quantity) - ceil(($cart->relationWithProduct->price * $cart->quantity))*$cart->relationWithProduct->discount/100) * $cart->relationWithProduct->relationWithTax->percentage / 100)
+                                               $totalPrice += (( $cart->relationWithProduct->price * $cart->quantity) - round(($cart->relationWithProduct->price * $cart->quantity)*$cart->relationWithProduct->discount/100)) + round(( $cart->relationWithProduct->price * $cart->quantity) - round(($cart->relationWithProduct->price * $cart->quantity)*$cart->relationWithProduct->discount/100) * $cart->relationWithProduct->relationWithTax->percentage / 100)
                                            @endphp
                                            @endif
+
                                         </td>
                                         <td>
                                             <div  class="d-flex text-danger">

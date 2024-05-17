@@ -109,7 +109,7 @@
                             </td>
                             <td>{{ $product->code }}</td>
                             <td>{{ $product->barcode }}</td>
-                            <td>{{ $product->price }}</td>
+                            <td>TK.{{ $product->price }}</td>
                             <td>
                                 @if ($product->status == 'active')
                                 <div class="d-flex align-items-center text-primary">	<i class="bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1"></i>
@@ -131,8 +131,9 @@
                                 <form style="display: inline-block" action="{{ route('product.destroy',$product->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
-                                     <button style="display:inline-flex;width: 30px; height:30px; box-shadow: 0 0  3px 0 #00000045;font-size:16px; justify-content:center;align-items:center; color:red;background: transparent;border:none;" title="delete"  class="delete border-none" type="submit">
-                                        <i class="fadeIn animated bx bx-trash-alt"></i></button>
+                                    <button style="display:inline-flex;width: 30px; height:30px; box-shadow: 0 0  3px 0 #00000045;font-size:16px; justify-content:center;align-items:center; color:red;background: transparent;border:none;" title="delete"  class="delete border-none" type="submit">
+                                        <i class="fadeIn animated bx bx-trash-alt"></i>
+                                    </button>
                                 </form>
                             </td>
                         </tr>
@@ -229,9 +230,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
                         @empty
                         <tr>
                             <td colspan="8" class="text-center bold bg-warning">!!Not product yet!!</td>

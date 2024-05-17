@@ -20,7 +20,10 @@ class Invoice extends Model
                         'total_discount',
                         'total_tax',
                         'total_price'];
-    public function invoiceWithUser(){
-       return $this->hasOne(User::class,'id','customer_id','sale_by');
+    public function relationWithCustomer(){
+       return $this->hasOne(User::class,'id','customer_id');
+    }
+    public function relationWithSaleBy(){
+       return $this->hasOne(User::class,'id','sale_by');
     }
 }
